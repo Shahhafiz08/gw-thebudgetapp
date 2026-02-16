@@ -9,6 +9,7 @@
   --color-background-secondary: var(--background-secondary);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-border-color: var(--border-color);
   --color-success: var(--success);
 
@@ -41,6 +42,7 @@
 
   --text-primary: #0f172a;
   --text-secondary: #64748b;
+  --text-muted: #94a3b8;
 
   --border-color: #cbd5e1;
   /* Slightly clearer border */
@@ -81,7 +83,8 @@
 
   --border-color: #334155;
   /* navy-border */
-  --primary: #0a1f43;
+  /* navy-border */
+  --primary: #3b82f6;
   /* Ensure primary stays consistent or use specific if distinct */
 }
 
@@ -135,4 +138,17 @@
 
 .animate-shimmer {
   animation: shimmer 1.5s infinite;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

@@ -61,6 +61,7 @@ export interface MortgageResult {
     valuationFee: number;         // D39
     lifeInsurance: number;        // D40
     propertyInsurance: number;    // D41
+    preTitlePOA: number;          // New Field
     totalBankFees: number;        // D43
 
     // Property Transfer Fees
@@ -87,6 +88,7 @@ export interface MortgageResult {
     totalCashRequired: number;    // D64
     personalLoanUsed: number;     // D66
     cashBalance: number;          // D67
+    feeFinancing: number;         // New Field for Fee Financing
     finalNetPosition: number; // calculated field alias for compatibility if needed
 }
 

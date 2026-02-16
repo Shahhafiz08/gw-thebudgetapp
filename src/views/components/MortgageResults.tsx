@@ -54,7 +54,7 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                 {/* Total Payment */}
                 <div className="bg-background-white border border-border-color rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-2 mb-2">
-                        <Icon icon="solar:card-transfer-linear" className="w-5 h-5 text-primary" />
+                        <Icon icon="solar:card-transfer-linear" className="w-5 h-5 text-primary dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
                             Total Payment
                         </p>
@@ -68,7 +68,7 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                 {/* Total Loan Amount */}
                 <div className="bg-background-white border border-border-color rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-2 mb-2">
-                        <Icon icon="solar:hand-money-linear" className="w-5 h-5 text-primary" />
+                        <Icon icon="solar:hand-money-linear" className="w-5 h-5 text-primary dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
                             Total Loan Amt
                         </p>
@@ -84,7 +84,7 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                 {/* Final Net Position */}
                 <div className="bg-background-white border border-border-color rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-2 mb-2">
-                        <Icon icon="solar:chart-square-linear" className="w-5 h-5 text-emerald-600" />
+                        <Icon icon="solar:chart-square-linear" className="w-5 h-5 text-emerald-600 dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
                             Net Position
                         </p>
@@ -100,7 +100,7 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                 {/* Total Interest */}
                 <div className="bg-background-white border border-border-color rounded-xl p-6 shadow-md">
                     <div className="flex items-center gap-2 mb-2">
-                        <Icon icon="solar:graph-up-linear" className="w-5 h-5 text-red-600" />
+                        <Icon icon="solar:graph-up-linear" className="w-5 h-5 text-red-600 dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
                             Total Interest
                         </p>
@@ -115,7 +115,7 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
             {/* Fee Breakdown Summary */}
             <div className="bg-background-white rounded-xl p-6 shadow-md border border-border-color">
                 <div className="flex items-center gap-2 mb-4">
-                    <Icon icon="solar:bill-list-linear" className="w-5 h-5 text-primary" />
+                    <Icon icon="solar:bill-list-linear" className="w-5 h-5 text-primary dark:text-white" />
                     <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
                         Fee Breakdown Summary
                     </p>

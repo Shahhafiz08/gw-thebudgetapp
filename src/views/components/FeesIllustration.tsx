@@ -11,7 +11,6 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
     return (
         <div>
             <div className="flex items-center gap-2 my-6">
-                <div className="w-1 h-6 bg-primary rounded-full"></div>
                 <h3 className="text-2xl font-bold text-text-primary">Fees Illustration</h3>
             </div>
 
@@ -22,7 +21,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         <Icon icon="solar:bank-note-linear" className="w-24 h-24 text-primary" />
                     </div>
                     <div className="flex items-center gap-3 mb-6 relative">
-                        <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
+                        <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-white">
                             <Icon icon="ant-design:bank-outlined" className="w-6 h-6" />
                         </div>
                         <h4 className="font-bold text-lg text-text-primary">Bank Fees</h4>
@@ -57,7 +56,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         <Icon icon="solar:document-text-linear" className="w-24 h-24 text-primary" />
                     </div>
                     <div className="flex items-center gap-3 mb-6 relative">
-                        <div className="p-2.5 bg-purple-50 dark:bg-purple-900/30 rounded-xl text-purple-600 dark:text-purple-400">
+                        <div className="p-2.5 bg-purple-50 dark:bg-purple-900/30 rounded-xl text-purple-600 dark:text-white">
                             <Icon icon="solar:document-text-linear" className="w-6 h-6" />
                         </div>
                         <h4 className="font-bold text-lg text-text-primary">Transfer Fees</h4>
@@ -92,7 +91,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         <Icon icon="solar:home-linear" className="w-24 h-24 text-primary" />
                     </div>
                     <div className="flex items-center gap-3 mb-6 relative">
-                        <div className="p-2.5 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-orange-600 dark:text-orange-400">
+                        <div className="p-2.5 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-orange-600 dark:text-white">
                             <Icon icon="solar:home-linear" className="w-6 h-6" />
                         </div>
                         <h4 className="font-bold text-lg text-text-primary">Real Estate Fees</h4>
@@ -127,7 +126,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         <Icon icon="solar:wallet-money-linear" className="w-24 h-24 text-primary" />
                     </div>
                     <div className="flex items-center gap-3 mb-6 relative">
-                        <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl text-emerald-600 dark:text-emerald-400">
+                        <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl text-emerald-600 dark:text-white">
                             <Icon icon="solar:wallet-money-linear" className="w-6 h-6" />
                         </div>
                         <h4 className="font-bold text-lg text-text-primary">Cash Required</h4>

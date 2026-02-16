@@ -21,8 +21,8 @@ const DEFAULT_INPUTS: MortgageInputs = {
 
     // Fee Configs (Estimated Defaults - adjust as per typical Dubai rates)
     // Bank Fees
-    processingFeeRate: 0,    // Frequently waived or 0 in some contexts, or 1%
-    valuationFeeBase: 3150,  // C24
+    processingFeeRate: 0.5,    // Frequently waived or 0 in some contexts, or 1%
+    valuationFeeBase: 0,  // C24 (2500 + VAT)
 
     // Property Transfer Fees
     dldFeeRate: 4,           // C46 (4%)

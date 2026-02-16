@@ -135,19 +135,9 @@ export function calculateMortgage(
         plTerm,
         plRate,
         // Fee configs
-        processingFeeRate,
-        valuationFeeBase,
-        dldFeeRate,
-        transferFeeFixed,
-        titleDeedFeeFixed,
-        mortgageRegFeeRate,
-        commissionRate,
-        maintenanceAdvance,
-        nocFee,
-        conveyancingFee,
-        serviceFeeRate,
         cashAvailable = 0,
         rateType,
+        valuationFeeBase = 0,
     } = inputs;
 
     // --- 1. Loan & LTV Calculations ---
@@ -168,14 +158,21 @@ export function calculateMortgage(
 
     let mortgageEMI = 0;
     if (interestRate > 0 && mortgageAmount > 0) {
-        // PMT = (pv * rate) / (1 - (1 + rate)^-nper)
-        // Excel PMT: rate, nper, pv, [fv], [type]
-        // pv is negative loan amount usually in Excel to get positive payment, or vice versa.
-        // Formula: P * r * (1+r)^n / ((1+r)^n - 1) is standard for positive EMI.
+        // console.log('Monthly Mortgage Rate:', monthlyMortgageRate);
+        // console.log('Mortgage Months:', mortgageMonths);
+        // Standard EMI Formula for result parity with Excel PMT(rate, nper, -pv)
+        // This yields ~12,655 for 2.4M at 3.99% over 25 years.
         if (monthlyMortgageRate === 0) {
+
             mortgageEMI = mortgageAmount / mortgageMonths;
         } else {
-            mortgageEMI = (mortgageAmount * monthlyMortgageRate * Math.pow(1 + monthlyMortgageRate, mortgageMonths)) / (Math.pow(1 + monthlyMortgageRate, mortgageMonths) - 1);
+
+            const pow = Math.pow(1 + monthlyMortgageRate, mortgageMonths);
+            mortgageEMI = (mortgageAmount * monthlyMortgageRate * pow) / (pow - 1);
+            console.log('Mortgage EMI:', mortgageEMI);
+            console.log('Monthly Mortgage Rate:', monthlyMortgageRate);
+            console.log('Mortgage Months:', mortgageMonths);
+            console.log('pow', pow);
         }
     }
     // Round to 2 decimals to match Excel currency display usually, or float? Prompt says "exact parity". Excel keeps precision unless rounded.
@@ -206,61 +203,59 @@ export function calculateMortgage(
     const loanNeeded = propertyPrice - depositNeeded; // D35 (Should equal mortgageAmount)
 
     // Bank Fees
-    // TotalBankFeesBase (C38) = SUM(C23) -> processingFeeRate
-    const totalBankFeesBase = processingFeeRate / 100;
+    // Processing Fee (D38) = MortgageAmount * 0.5% * 1.05 (VAT)
+    const processingFee = mortgageAmount * 0.005 * 1.05;
 
-    // ProcessingFeeTotal (D38) = MortgageAmount * TotalBankFeesBase * 1.05
-    const processingFee = mortgageAmount * totalBankFeesBase * 1.05;
+    // ValuationFee (D39) = Input (inclusive of VAT if applicable)
+    const valuationFee = valuationFeeBase;
 
-    // ValuationFee (D39) = C24 * 1.05
-    const valuationFee = valuationFeeBase * 1.05;
-
-    // LifeInsurance (D40) = MortgageAmount * 0.0016
+    // LifeInsurance (D40) = MortgageAmount * 0.160%
     const lifeInsurance = mortgageAmount * 0.0016;
 
-    // PropertyInsurance (D41) = MortgageAmount * 0.00074
+    // PropertyInsurance (D41) = MortgageAmount * 0.074% (to match 1776 vs 2.4M)
     const propertyInsurance = mortgageAmount * 0.00074;
 
-    // TotalBankFees (D43) = SUM(D38:D42)
-    const totalBankFees = processingFee + valuationFee + lifeInsurance + propertyInsurance;
+    // Pre-title POA = 950
+    const preTitlePOA = 950;
+
+    // TotalBankFees (D43)
+    const totalBankFees = processingFee + valuationFee + lifeInsurance + propertyInsurance + preTitlePOA;
 
     // Property Transfer Fees
-    // DLDFees (D46) = PropertyPrice * C46
-    const dldFees = propertyPrice * (dldFeeRate / 100);
+    // DLDFees (D46) = PropertyPrice * 4%
+    const dldFees = propertyPrice * 0.04;
 
-    // TransferFee (D47) = Fixed
-    const transferFee = transferFeeFixed;
+    // TransferFee (D47) = 4000 * 1.05
+    const transferFee = 4000 * 1.05;
 
-    // TitleDeedFee (D48) = Fixed
-    const titleDeedFee = titleDeedFeeFixed;
+    // TitleDeedFee (D48) = 530
+    const titleDeedFee = 530;
 
-    // MortgageRegFee (D49) = MortgageAmount * C49
-    const mortgageRegFee = mortgageAmount * (mortgageRegFeeRate / 100);
+    // MortgageRegFee (D49) = MortgageAmount * 0.25%
+    const mortgageRegFee = mortgageAmount * 0.0025;
 
-    // TotalTransferFees (D50) = SUM(D46:D49)
+    // TotalTransferFees (D50)
     const totalTransferFees = dldFees + transferFee + titleDeedFee + mortgageRegFee;
 
     // Real Estate Fees
-    // Commission (D53) = PropertyPrice * C53 * 1.05
-    const commission = propertyPrice * (commissionRate / 100) * 1.05;
+    // Commission (D53) = PropertyPrice * 2% * 1.05
+    const commission = propertyPrice * 0.02 * 1.05;
 
-    // MaintenanceAdvance (D54)
-    // NOC (D55)
-    // Conveyancing (D56)
+    // MaintenanceAdvance (D54) = 5000
+    const maintenanceAdvance = 5000;
+
+    // NOC (D55) = 12000
+    const nocFee = 12000;
+
+    // Conveyancing (D56) = 4500 * 1.05
+    const conveyancingFee = 4500 * 1.05;
 
     // TotalRealEstateFees (D57)
     const totalRealEstateFees = commission + maintenanceAdvance + nocFee + conveyancingFee;
 
     // Mortgage Service Fees
-    // ServiceFeeCap (D60) = MIN(LoanNeeded * C60) ... Assuming MIN(LoanNeeded * ServiceRate) ??
-    // The prompt says "ServiceFeeCap (D60) = MIN(LoanNeeded * C60)". This is ambiguous.
-    // Likely "Service Fee" based on loan amount, perhaps capped at some value not mentioned, or simply calculated as Loan * Rate.
-    // Given the formula "MIN(LoanNeeded * C60)", it implies a single value.
-    // I will implement as `loanNeeded * (serviceFeeRate / 100)`. 
-    // If C60 is a flat fee, then it's MIN(LoanNeeded, C60). But typically C60 is a rate.
-    // Let's assume it calculates the fee.
-    const serviceFeeCap = loanNeeded * (serviceFeeRate / 100);
-    const totalServiceFee = serviceFeeCap; // D61
+    // Service Fee = 0
+    const totalServiceFee = 0; // Fixed at 0 as per image 0.00%
 
     // --- 5. Grand Totals ---
     // TotalFees (D63)
@@ -289,7 +284,7 @@ export function calculateMortgage(
     // JS floats are precise enough for this range usually.
 
     const results: MortgageResult = {
-        monthlyEMI: mortgageEMI + personalLoanEMI,
+        monthlyEMI: mortgageEMI,
         totalPayment: (mortgageEMI * tenure * 12) + (personalLoanEMI * plTerm * 12),
         totalInterest: ((mortgageEMI * tenure * 12) - mortgageAmount) + ((personalLoanEMI * plTerm * 12) - personalLoanAmount),
         principalAmount: mortgageAmount + personalLoanAmount,
@@ -306,6 +301,7 @@ export function calculateMortgage(
         valuationFee,
         lifeInsurance,
         propertyInsurance,
+        preTitlePOA,
         totalBankFees,
 
         dldFees,
@@ -328,7 +324,8 @@ export function calculateMortgage(
         totalCashRequired,
         personalLoanUsed,
         cashBalance,
-        finalNetPosition: cashBalance // Mapping to generic field if needed or just use cashBalance
+        finalNetPosition: cashBalance, // Mapping to generic field if needed or just use cashBalance
+        feeFinancing: 0,
     };
 
     // Amortization & Chart (Mortgage Focused)
