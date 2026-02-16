@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-background-light: var(--background-light);
+  --color-background-white: var(--background-white);
+  --color-surface: var(--background-white);
+  --color-background-secondary: var(--background-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-color: var(--border-color);
+  --color-success: var(--success);
+
+  --color-background-dark: var(--background-dark);
+  /* Keep for compatibility */
+
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+}
+
+:root {
+  /* Light Mode (Default) */
+  --primary: #0a1f43;
+  --primary-light: #3b82f6;
+
+  --background-light: #f1f5f9;
+  /* Updated to clearer grey */
+  --background-white: #ffffff;
+  --background-secondary: #e2e8f0;
+  /* Darker secondary */
+
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+
+  --border-color: #cbd5e1;
+  /* Slightly clearer border */
+  --success: #22c55e;
+
+  /* Dark Mode Colors */
+  --background-dark: #111721;
+  /* Main dark background */
+  --surface-dark: #1e293b;
+  /* Cards/Panels */
+  --surface-elevated-dark: #232d3f;
+  /* Inputs/Inner cards */
+
+  --text-primary-dark: #f8fafc;
+  --text-secondary-dark: #94a3b8;
+  --text-muted-dark: #64748b;
+
+  --border-dark: #334155;
+
+  --grid-pattern-dark: rgba(255, 255, 255, 0.03);
+  --glow-dark: rgba(10, 31, 67, 0.4);
+}
+
+/* Apply dark mode variables when .dark class is present */
+.dark {
+  --background-light: #111721;
+  /* navy-dark */
+  --background-white: #1e293b;
+  /* navy-card */
+  --background-secondary: #0f1520;
+  /* Slightly darker or same as main for contrast */
+
+  --text-primary: #f8fafc;
+  /* text-white */
+  --text-secondary: #94a3b8;
+  /* text-gray */
+  --text-muted: #64748b;
+
+  --border-color: #334155;
+  /* navy-border */
+  --primary: #0a1f43;
+  /* Ensure primary stays consistent or use specific if distinct */
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle, #0a1f4315 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image: radial-gradient(circle, #3b82f630 1px, transparent 1px);
+  }
+
+  .shadow-2d {
+    box-shadow: 6px 6px 0px 0px rgba(10, 31, 67, 0.1);
+  }
+
+  .dark .shadow-2d {
+    box-shadow: 6px 6px 0px 0px rgba(51, 65, 85, 0.5);
+  }
+
+  .blur-overlay {
+    filter: blur(100px);
+    z-index: 0;
+  }
+
+  .glow-button {
+    transition: all 0.3s ease;
+  }
+
+  .dark .glow-button {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .dark .glow-button:hover {
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Shimmer animation for buttons */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
