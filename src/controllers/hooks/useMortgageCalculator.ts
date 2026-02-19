@@ -1,7 +1,3 @@
-/**
- * Mortgage Calculator Controller Hook
- * Controller Layer - State management and business logic orchestration
- */
 
 'use client';
 
@@ -56,8 +52,7 @@ export function useMortgageCalculator(initialInputs?: Partial<MortgageInputs>) {
     }, [inputs]);
 
     const validation = useMemo(() => {
-        // Simple/Partial validation for now
-        return { isValid: true, errors: [] };
+        return validateMortgageInputs(inputs);
     }, [inputs]);
 
     const updateInput = useCallback((key: keyof MortgageInputs, value: number | string) => {

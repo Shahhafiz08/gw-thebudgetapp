@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import type { MortgageCalculation, MortgageInputs } from '@/models/types/mortgage';
-import { exportToExcel, exportToImage, shareViaWhatsApp, shareNative } from '@/controllers/utils/exportUtils';
+import { exportToExcel, exportToImage, shareImage } from '@/controllers/utils/exportUtils';
 import { DesktopNavigation } from './components/DesktopNavigation';
 import { LoanParameters } from './components/LoanParameters';
 import { MortgageResults } from './components/MortgageResults';
@@ -44,7 +44,7 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
     const handleExportImage = async () => {
         setIsExporting(true);
         try {
-            await exportToImage('main-content', 'mortgage-calculation.png');
+            await exportToImage('main-content');
         } catch (error) {
             console.error('Export failed:', error);
         } finally {
@@ -52,10 +52,12 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
         }
     };
 
-    const handleShare = async () => {
-        const shared = await shareNative(calculation);
-        if (!shared) {
-            shareViaWhatsApp(calculation);
+    const handleShareImage = async () => {
+        setIsExporting(true);
+        try {
+            await shareImage('main-content');
+        } finally {
+            setIsExporting(false);
         }
     };
 
@@ -66,15 +68,15 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
                 isExporting={isExporting}
                 onExportExcel={handleExportExcel}
                 onExportImage={handleExportImage}
-                onShare={handleShare}
+                onShareImage={handleShareImage}
             />
 
             {/* Main Content Area */}
             <main id="main-content" className="max-w-[1600px] mx-auto px-6 py-8">
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    {/* Left Sidebar - Sticky */}
-                    <div className="lg:col-span-3 sticky top-24 h-[calc(100vh-8rem)]">
+                    {/* Left Sidebar - Sticky on Desktop, Static on Mobile */}
+                    <div className="lg:col-span-3 lg:sticky lg:top-24 lg:h-[calc(100vh-8rem)]">
                         <LoanParameters
                             inputs={inputs}
                             onInputChange={onInputChange}

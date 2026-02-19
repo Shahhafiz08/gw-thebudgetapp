@@ -86,37 +86,39 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                 </div>
 
                 {/* Real Estate Fees Card */}
-                <div className="bg-background-white rounded-2xl p-6 shadow-lg border border-border-color relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                        <Icon icon="solar:home-linear" className="w-24 h-24 text-primary" />
+                <div className="bg-background-white flex flex-col justify-between rounded-2xl p-6 shadow-lg border border-border-color relative overflow-hidden group">
+                    <div className=" relative flex justify-between flex-col">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <Icon icon="solar:home-linear" className="w-24 h-24 text-primary" />
+                        </div>
+                        <div className="flex items-center gap-3 mb-6 relative">
+                            <div className="p-2.5 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-orange-600 dark:text-white">
+                                <Icon icon="solar:home-linear" className="w-6 h-6" />
+                            </div>
+                            <h4 className="font-bold text-lg text-text-primary">Real Estate Fees</h4>
+                        </div>
+                        <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                                <span className="text-text-secondary text-sm font-medium">Commission (2%)</span>
+                                <span className="text-text-primary font-semibold text-sm">{formatAED(results.commission)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-text-secondary text-sm font-medium">Maintenance Advance</span>
+                                <span className="text-text-primary font-semibold text-sm">{formatAED(results.maintenanceAdvance)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-text-secondary text-sm font-medium">NOC, HASANTUK, Other</span>
+                                <span className="text-text-primary font-semibold text-sm">{formatAED(results.nocFee)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-text-secondary text-sm font-medium">Conveyancing</span>
+                                <span className="text-text-primary font-semibold text-sm">{formatAED(results.conveyancingFee)}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-3 mb-6 relative">
-                        <div className="p-2.5 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-orange-600 dark:text-white">
-                            <Icon icon="solar:home-linear" className="w-6 h-6" />
-                        </div>
-                        <h4 className="font-bold text-lg text-text-primary">Real Estate Fees</h4>
-                    </div>
-                    <div className="space-y-3 relative">
-                        <div className="flex justify-between items-center">
-                            <span className="text-text-secondary text-sm font-medium">Commission (2%)</span>
-                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.commission)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-text-secondary text-sm font-medium">Maintenance Advance</span>
-                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.maintenanceAdvance)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-text-secondary text-sm font-medium">NOC, HASANTUK, Other</span>
-                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.nocFee)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-text-secondary text-sm font-medium">Conveyancing</span>
-                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.conveyancingFee)}</span>
-                        </div>
-                        <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
-                            <span className="font-bold text-text-primary">Total Real Estate Fees</span>
-                            <span className="font-bold text-orange-600 dark:text-orange-400">{formatAED(results.totalRealEstateFees)}</span>
-                        </div>
+                    <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
+                        <span className="font-bold text-text-primary">Total Real Estate Fees</span>
+                        <span className="font-bold text-orange-600 dark:text-orange-400">{formatAED(results.totalRealEstateFees)}</span>
                     </div>
                 </div>
 

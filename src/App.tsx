@@ -1,4 +1,3 @@
-import React from 'react';
 import { DesktopView } from '@/views/DesktopView';
 import { useMortgageCalculator } from '@/controllers/hooks/useMortgageCalculator';
 

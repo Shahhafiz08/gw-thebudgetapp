@@ -3,14 +3,28 @@ import { Icon } from '@iconify/react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import type { MortgageCalculation } from '@/models/types/mortgage';
 import { formatAED, formatCompactAED } from '@/lib/utils';
+import { exportToImage } from '@/controllers/utils/exportUtils';
 
 interface AmortizationChartProps {
     data: MortgageCalculation['chartData'];
 }
 
 export const AmortizationChart: React.FC<AmortizationChartProps> = ({ data }) => {
+    const handleDownload = async () => {
+        try {
+            await exportToImage('amortization-chart-container');
+        } catch (error) {
+            console.error('Failed to download chart:', error);
+        }
+    };
+
     return (
-        <div className="bg-background-white border border-border-color rounded-2xl p-8 shadow-lg">
+        <div
+            id="amortization-chart-container"
+            className="bg-background-white border border-border-color rounded-2xl p-8 shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
+            onClick={handleDownload}
+            title="Click to download chart"
+        >
             <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-primary/10 rounded-lg">
                     <Icon icon="solar:chart-2-linear" className="w-6 h-6 text-primary dark:text-white" />

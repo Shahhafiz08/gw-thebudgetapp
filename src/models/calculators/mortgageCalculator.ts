@@ -11,36 +11,7 @@ import type {
     MortgageCalculation,
 } from '../types/mortgage';
 
-// --- Pure Utility Functions ---
 
-/**
- * Calculate LTV (Loan to Value) percentage
- * Formula: LTV = 100 - DownPaymentPercent
- */
-export function calculateLTV(downPaymentPercent: number): number {
-    return 100 - downPaymentPercent;
-}
-
-/**
- * Calculate Mortgage Amount
- * Formula: PropertyValue * (LTV / 100)
- */
-export function calculateMortgageAmount(propertyValue: number, ltvPercent: number): number {
-    return propertyValue * (ltvPercent / 100);
-}
-
-/**
- * Calculate Down Payment Amount
- * Formula: PropertyValue * (DownPaymentPercent / 100)
- */
-export function calculateDownPaymentAmount(propertyValue: number, downPaymentPercent: number): number {
-    return propertyValue * (downPaymentPercent / 100);
-}
-
-/**
- * Calculate EMI using standard amortization formula
- * EMI = P * [ r(1 + r)^n ] / [ (1 + r)^n - 1 ]
- */
 export function calculateEMI(
     principal: number,
     annualRatePercent: number,
@@ -64,62 +35,6 @@ export function calculateEMI(
     return emi;
 }
 
-/**
- * Calculate Personal Loan Amount
- * Formula: PropertyValue * (PLPercent / 100)
- */
-export function calculatePLAmount(propertyValue: number, plPercent: number): number {
-    return propertyValue * (plPercent / 100);
-}
-
-/**
- * Calculate Fees
- * - Legal Fee = MortgageAmount * LegalFeeRate
- * - Stamp Duty = MortgageAmount * StampDutyRate
- * - Loan Agreement = MortgageAmount * LoanAgreementRate * 1.05 (VAT?)
- * - Other Fees = Fixed Amount
- */
-export function calculateFees(
-    mortgageAmount: number,
-    legalFeeRatePercent: number,
-    stampDutyRatePercent: number,
-    loanAgreementRatePercent: number,
-    otherFees: number
-) {
-    const legalFee = mortgageAmount * (legalFeeRatePercent / 100);
-    const stampDuty = mortgageAmount * (stampDutyRatePercent / 100);
-    const loanAgreementCost = mortgageAmount * (loanAgreementRatePercent / 100) * 1.05;
-
-    const totalFees = legalFee + stampDuty + loanAgreementCost + otherFees;
-
-    return {
-        legalFee,
-        stampDuty,
-        loanAgreementCost,
-        totalFees
-    };
-}
-
-/**
- * Calculate Total Cash Required
- * Formula: DownPayment + TotalFees
- */
-export function calculateTotalCashRequired(downPayment: number, totalFees: number): number {
-    return downPayment + totalFees;
-}
-
-/**
- * Calculate Final Net Position
- * Formula: (DownPayment + TotalFees) - Rebate - PL_Amount
- */
-export function calculateFinalNetPosition(
-    cashRequired: number,
-    rebate: number,
-    plAmount: number
-): number {
-    return cashRequired - rebate - plAmount;
-}
-
 
 // --- Main Orchestrator ---
 
@@ -136,7 +51,6 @@ export function calculateMortgage(
         plRate,
         // Fee configs
         cashAvailable = 0,
-        rateType,
         valuationFeeBase = 0,
     } = inputs;
 
@@ -207,7 +121,7 @@ export function calculateMortgage(
     const processingFee = mortgageAmount * 0.005 * 1.05;
 
     // ValuationFee (D39) = Input (inclusive of VAT if applicable)
-    const valuationFee = valuationFeeBase;
+    const valuationFee = valuationFeeBase + (valuationFeeBase * 0.05);
 
     // LifeInsurance (D40) = MortgageAmount * 0.160%
     const lifeInsurance = mortgageAmount * 0.0016;
@@ -247,15 +161,15 @@ export function calculateMortgage(
     // NOC (D55) = 12000
     const nocFee = 12000;
 
-    // Conveyancing (D56) = 4500 * 1.05
+
     const conveyancingFee = 4500 * 1.05;
 
-    // TotalRealEstateFees (D57)
+
     const totalRealEstateFees = commission + maintenanceAdvance + nocFee + conveyancingFee;
 
-    // Mortgage Service Fees
-    // Service Fee = 0
-    const totalServiceFee = 0; // Fixed at 0 as per image 0.00%
+
+
+    const totalServiceFee = 0;
 
     // --- 5. Grand Totals ---
     // TotalFees (D63)

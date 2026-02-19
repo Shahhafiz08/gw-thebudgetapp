@@ -8,9 +8,7 @@ export function ThemeToggle() {
     const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
 
     React.useEffect(() => {
-        const isDark =
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const isDark = localStorage.theme === 'dark';
 
         if (isDark) {
             setTheme('dark');
