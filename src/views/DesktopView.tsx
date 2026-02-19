@@ -63,7 +63,7 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
 
     return (
         <div className="min-h-screen bg-background-light bg-grid-pattern transition-colors duration-300">
-            {/* Dashboard Navigation */}
+
             <DesktopNavigation
                 isExporting={isExporting}
                 onExportExcel={handleExportExcel}

@@ -42,13 +42,13 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
                 {/* Left Side */}
                 <div className="flex items-center gap-12">
                     {/* Logo */}
+                    {/* Logo */}
                     <div className="flex items-center gap-3 group cursor-pointer">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
-                            <Icon icon="solar:calculator-minimalistic-linear" className="w-6 h-6 text-white" />
-                        </div>
-                        <span className="text-xl lg:text-2xl font-bold text-primary tracking-tight">
-                            INDEPENDENT
-                        </span>
+                        <img
+                            src="/mini-logo.png"
+                            alt="Independent Mortgage Broker"
+                            className="h-20 w-40 object-contain"
+                        />
                     </div>
                 </div>
 

@@ -16,7 +16,6 @@ export async function exportToExcel(calculation: MortgageCalculation) {
         const ORANGE = 'FFB45309';
         const GREEN = 'FF00B050';
 
-        // ✅ AED currency formatting (numbers remain numbers)
         const formatNumber = (cell: ExcelJS.Cell) => {
             cell.numFmt = '"AED " #,##0';
             cell.alignment = { horizontal: 'right' };
@@ -41,13 +40,15 @@ export async function exportToExcel(calculation: MortgageCalculation) {
             });
 
             sheet.addImage(imageId, {
-                tl: { col: 0, row: 0 },
+                tl: { col: 0.95, row: 0 },
                 ext: { width: 420, height: 80 },
             });
         } catch (e) {
             console.warn('Failed to load logo', e);
         }
 
+        sheet.addRow([]);
+        sheet.addRow([]);
         sheet.addRow([]);
         sheet.addRow([]);
 
@@ -282,29 +283,33 @@ export async function shareImage(
     try {
         const blob = await generateImageBlob(elementId);
         const file = new File([blob], fileName, { type: 'image/png' });
+        const shareData = {
+            title: 'Mortgage Calculation',
 
-        if (navigator.share) {
+            files: [file],
+        };
+
+
+        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
             try {
-                await navigator.share({
-                    title: 'Mortgage Calculation',
-                    text: 'Mortgage calculation overview attached.',
-                    files: [file],
-                });
+                await navigator.share(shareData);
                 return;
             } catch (err: any) {
+                // If user aborts, do nothing
                 if (err.name === 'AbortError') return;
-                // If share fails (other than abort), fall through to download
                 console.warn('Share API failed, falling back to download', err);
             }
         }
 
-        // Fallback: Download the image
+        // Fallback: Download the image + Open WhatsApp
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = fileName;
         link.click();
         URL.revokeObjectURL(url);
+
+
 
     } catch (error) {
         console.error('Error sharing image:', error);
