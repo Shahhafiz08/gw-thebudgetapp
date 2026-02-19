@@ -83,6 +83,9 @@ export async function exportToExcel(calculation: MortgageCalculation) {
         addFinRow('Flat Rate', `${(results.flatRate).toFixed(2)}%`, true);
         addFinRow('Mortgage Rate Type', inputs.rateType, true);
         addFinRow('Mortgage EMI', results.monthlyEMI, true);
+        addFinRow('Valuation ', results.valuationFee, true);
+        addFinRow('Processing fee ', results.processingFee, true);
+
 
         sheet.addRow([]);
 
@@ -212,7 +215,7 @@ export async function exportToExcel(calculation: MortgageCalculation) {
 
         sheet.addRow([]);
         const disclaimerRow = sheet.addRow([
-            "This is used for quotation purposes only by client's requests. Independent Mortgage Broker is not responsible for any changes in fees or regulations."
+            "This is used for quotation purposes only by client's requests. Independent Finance has given without any liability on the company's part."
         ]);
 
         sheet.mergeCells(`A${disclaimerRow.number}:C${disclaimerRow.number}`);

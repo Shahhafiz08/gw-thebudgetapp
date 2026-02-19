@@ -86,15 +86,13 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                     <div className="flex items-center gap-2 mb-2">
                         <Icon icon="solar:chart-square-linear" className="w-5 h-5 text-emerald-600 dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
-                            Net Position
+                            Deposit needed
                         </p>
                     </div>
                     <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                        {formatCompactAED(results.cashBalance)}
+                        {formatCompactAED(results.depositNeeded)}
                     </p>
-                    <div className="mt-1 text-xs text-text-muted">
-                        Cash Remaining
-                    </div>
+
                 </div>
 
                 {/* Total Interest */}
@@ -102,13 +100,12 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                     <div className="flex items-center gap-2 mb-2">
                         <Icon icon="solar:graph-up-linear" className="w-5 h-5 text-red-600 dark:text-white" />
                         <p className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
-                            Total Interest
+                            Loan amount needed
                         </p>
                     </div>
                     <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                        {formatCompactAED(results.totalInterest)}
+                        {formatCompactAED(results.loanNeeded)}
                     </p>
-                    <p className="text-xs text-text-muted mt-1">Over Term</p>
                 </div>
             </div>
 
