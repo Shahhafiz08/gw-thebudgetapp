@@ -114,7 +114,7 @@ export function calculateMortgage(
     // Property Summary
     const propertyPrice = purchasePrice; // D33
     const depositNeeded = purchasePrice * (downPaymentPercent / 100); // D34
-    const loanNeeded = propertyPrice - depositNeeded; // D35 (Should equal mortgageAmount)
+
 
     // Bank Fees
     // Processing Fee (D38) = MortgageAmount * 0.5% * 1.05 (VAT)
@@ -198,7 +198,7 @@ export function calculateMortgage(
     // JS floats are precise enough for this range usually.
 
     const results: MortgageResult = {
-        monthlyEMI: mortgageEMI,
+        monthlyEMI: mortgageEMI + personalLoanEMI,
         totalPayment: (mortgageEMI * tenure * 12) + (personalLoanEMI * plTerm * 12),
         totalInterest: ((mortgageEMI * tenure * 12) - mortgageAmount) + ((personalLoanEMI * plTerm * 12) - personalLoanAmount),
         principalAmount: mortgageAmount + personalLoanAmount,
@@ -233,7 +233,6 @@ export function calculateMortgage(
         totalServiceFee,
 
         depositNeeded,
-        loanNeeded,
         totalFees,
         totalCashRequired,
         personalLoanUsed,

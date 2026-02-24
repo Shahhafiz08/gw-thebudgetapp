@@ -45,7 +45,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         </div>
                         <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
                             <span className="font-bold text-text-primary">Total Bank Fees</span>
-                            <span className="font-bold text-blue-600 dark:text-blue-400">{formatAED(results.totalBankFees)}</span>
+                            <span className="font-bold text-text-primary">{formatAED(results.totalBankFees)}</span>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         </div>
                         <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
                             <span className="font-bold text-text-primary">Total Transfer Fees</span>
-                            <span className="font-bold text-purple-600 dark:text-purple-400">{formatAED(results.totalTransferFees)}</span>
+                            <span className="font-bold text-text-primary">{formatAED(results.totalTransferFees)}</span>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                     </div>
                     <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
                         <span className="font-bold text-text-primary">Total Real Estate Fees</span>
-                        <span className="font-bold text-orange-600 dark:text-orange-400">{formatAED(results.totalRealEstateFees)}</span>
+                        <span className="font-bold text-text-primary">{formatAED(results.totalRealEstateFees)}</span>
                     </div>
                 </div>
 
@@ -133,26 +133,26 @@ export const FeesIllustration: React.FC<FeesIllustrationProps> = ({ results }) =
                         </div>
                         <h4 className="font-bold text-lg text-text-primary">Cash Required</h4>
                     </div>
-                    <div className="space-y-4 relative">
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-text-secondary font-medium">Grand Total Fees</span>
-                            <span className="font-bold text-text-primary">{formatAED(results.totalFees)}</span>
+                    <div className="space-y-3 relative">
+                        <div className="flex justify-between items-center">
+                            <span className="text-text-secondary text-sm font-medium">Grand Total Fees</span>
+                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.totalFees)}</span>
                         </div>
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-text-secondary font-medium">Deposit Needed</span>
-                            <span className="font-bold text-text-primary">{formatAED(results.depositNeeded)}</span>
+                        <div className="flex justify-between items-center">
+                            <span className="text-text-secondary text-sm font-medium">Deposit Needed</span>
+                            <span className="text-text-primary font-semibold text-sm">{formatAED(results.depositNeeded)}</span>
                         </div>
-                        <div className="flex justify-between items-center pt-2 border-t border-border-color/50">
-                            <span className="text-text-primary font-bold">Total Required</span>
-                            <span className="text-lg font-bold text-text-primary">{formatAED(results.totalFees + results.depositNeeded)}</span>
+                        <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
+                            <span className="font-bold text-text-primary">Total Required</span>
+                            <span className="font-bold text-text-primary">{formatAED(results.totalFees + results.depositNeeded)}</span>
                         </div>
-                        <div className="flex justify-between items-center text-sm text-text-muted bg-background-light/50 dark:bg-background-secondary/30 p-2 rounded-lg">
-                            <span className="text-text-secondary dark:text-text-muted">Less: Personal Loan</span>
-                            <span className="text-text-primary dark:text-white">- {formatAED(results.personalLoanUsed)}</span>
+                        <div className="flex justify-between items-center p-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-secondary/30">
+                            <span className="text-text-secondary text-sm font-medium">Less: Personal Loan</span>
+                            <span className="text-text-primary font-semibold text-sm">- {formatAED(results.personalLoanUsed)}</span>
                         </div>
-                        <div className="flex justify-between items-center pt-4 border-t-2 border-primary/20">
-                            <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Final Cash Required</span>
-                            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{formatAED(results.totalCashRequired - results.personalLoanUsed - (results.cashBalance < 0 ? 0 : 0))}</span>
+                        <div className="pt-3 mt-2 border-t border-border-color border-dashed flex justify-between items-center">
+                            <span className="font-bold text-text-primary">Final Cash Required</span>
+                            <span className="font-bold text-text-primary">{formatAED(results.totalCashRequired - results.personalLoanUsed - (results.cashBalance < 0 ? 0 : 0))}</span>
                         </div>
                     </div>
                 </div>

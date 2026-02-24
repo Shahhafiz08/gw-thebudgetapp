@@ -11,7 +11,7 @@ import { exportToExcel, exportToImage, shareImage } from '@/controllers/utils/ex
 import { DesktopNavigation } from './components/DesktopNavigation';
 import { LoanParameters } from './components/LoanParameters';
 import { MortgageResults } from './components/MortgageResults';
-import { AmortizationChart } from './components/AmortizationChart';
+
 import { FeesIllustration } from './components/FeesIllustration';
 
 export interface DesktopViewProps {
@@ -28,7 +28,7 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
     validation,
 }) => {
     const [isExporting, setIsExporting] = useState(false);
-    const { results, chartData } = calculation;
+    const { results } = calculation;
 
     const handleExportExcel = async () => {
         setIsExporting(true);
@@ -71,11 +71,9 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
                 onShareImage={handleShareImage}
             />
 
-            {/* Main Content Area */}
             <main id="main-content" className="max-w-[1600px] mx-auto px-6 py-8">
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    {/* Left Sidebar - Sticky on Desktop, Static on Mobile */}
                     <div className="lg:col-span-3 lg:sticky lg:top-24 lg:h-[calc(100vh-8rem)]">
                         <LoanParameters
                             inputs={inputs}
@@ -90,7 +88,7 @@ export const DesktopView: React.FC<DesktopViewProps> = ({
                         <MortgageResults
                             results={results}
                         />
-                        <AmortizationChart data={chartData} />
+
                         <FeesIllustration results={results} />
                     </div>
                 </div>

@@ -92,10 +92,12 @@ export const LoanParameters: React.FC<LoanParametersProps> = ({
                             value={inputs.rateType}
                             onChange={(e) => onInputChange('rateType', e.target.value)}
                         >
-                            <option>Eibor-linked</option>
-                            <option>Fixed (1 Yr)</option>
-                            <option>Fixed (3 Yrs)</option>
-                            <option>Fixed (5 Yrs)</option>
+                            <option>1-year fixed</option>
+                            <option>2-year fixed</option>
+                            <option>3-year fixed</option>
+                            <option>4-year fixed</option>
+                            <option>5-year fixed</option>
+
                         </select>
                     </div>
                 </div>

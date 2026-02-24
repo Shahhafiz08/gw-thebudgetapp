@@ -1,4 +1,4 @@
-import { DesktopView } from '@/views/DesktopView';
+import { DesktopView } from '@/views/dashboard';
 import { useMortgageCalculator } from '@/controllers/hooks/useMortgageCalculator';
 
 function App() {

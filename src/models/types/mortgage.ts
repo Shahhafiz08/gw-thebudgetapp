@@ -83,7 +83,7 @@ export interface MortgageResult {
 
     // Grand Totals
     depositNeeded: number;        // D34
-    loanNeeded: number;           // D35
+
     totalFees: number;            // D63
     totalCashRequired: number;    // D64
     personalLoanUsed: number;     // D66

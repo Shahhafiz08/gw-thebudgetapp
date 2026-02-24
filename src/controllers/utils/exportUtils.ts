@@ -14,7 +14,6 @@ export async function exportToExcel(calculation: MortgageCalculation) {
 
         const RED = 'FFFF0000';
         const ORANGE = 'FFB45309';
-        const GREEN = 'FF00B050';
 
         const formatNumber = (cell: ExcelJS.Cell) => {
             cell.numFmt = '"AED " #,##0';
@@ -83,7 +82,7 @@ export async function exportToExcel(calculation: MortgageCalculation) {
         addFinRow('Mortgage Rate', `${inputs.interestRate}%`);
         addFinRow('Flat Rate', `${(results.flatRate).toFixed(2)}%`, true);
         addFinRow('Mortgage Rate Type', inputs.rateType, true);
-        addFinRow('Mortgage EMI', results.monthlyEMI, true);
+        addFinRow('Mortgage EMI', results.mortgageEMI, true);
         addFinRow('Valuation ', results.valuationFee, true);
         addFinRow('Processing fee ', results.processingFee, true);
 
@@ -131,20 +130,6 @@ export async function exportToExcel(calculation: MortgageCalculation) {
         addPayRow('Property Purchase Price:', '', inputs.purchasePrice);
         addPayRow('Deposit Needed:', '', results.depositNeeded);
 
-        const loanRow = addPayRow(
-            'Loan Amount Needed:',
-            '',
-            results.mortgageAmount,
-            undefined,
-            true
-        );
-
-        loanRow.getCell(3).border = {
-            top: { style: 'medium', color: { argb: GREEN } },
-            bottom: { style: 'medium', color: { argb: GREEN } },
-            left: { style: 'medium', color: { argb: GREEN } },
-            right: { style: 'medium', color: { argb: GREEN } }
-        };
 
         sheet.addRow([]);
 

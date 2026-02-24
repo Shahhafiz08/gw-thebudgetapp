@@ -41,14 +41,14 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 flex items-center justify-between h-20">
                 {/* Left Side */}
                 <div className="flex items-center gap-12">
-                    {/* Logo */}
-                    {/* Logo */}
-                    <div className="flex items-center gap-3 group cursor-pointer">
+
+                    <div className="flex gap-2 items-center flex-col group cursor-pointer">
                         <img
-                            src="/mini-logo.png"
+                            src="/independent-logo.webp"
                             alt="Independent Mortgage Broker"
-                            className="h-20 w-40 object-contain"
+                            className="h-10 w-60 object-contain"
                         />
+                        <div className="text-sm font-medium text-slate-900 dark:text-white -mt-2">THE BUDGET APP</div>
                     </div>
                 </div>
 

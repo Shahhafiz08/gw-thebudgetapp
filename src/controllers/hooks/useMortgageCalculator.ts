@@ -49,7 +49,7 @@ export function useMortgageCalculator(initialInputs?: Partial<MortgageInputs>) {
 
     const calculation = useMemo<MortgageCalculation>(() => {
         return calculateMortgage(inputs);
-    }, [inputs]);
+    }, [inputs])
 
     const validation = useMemo(() => {
         return validateMortgageInputs(inputs);
