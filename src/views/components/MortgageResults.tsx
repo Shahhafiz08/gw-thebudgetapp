@@ -7,7 +7,6 @@ interface MortgageResultsProps {
     results: MortgageCalculation['results'];
 }
 
-// Width of one stat card step (px) when clicking the arrows
 const SCROLL_STEP = 140;
 
 export const MortgageResults: React.FC<MortgageResultsProps> = ({
@@ -34,42 +33,53 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
         setTimeout(updateArrows, 300);
     };
 
+    // Stat cards data — single source of truth for both mobile + desktop
+    const stats = [
+        { label: 'Mortgage Amount', value: formatCompactAED(results.mortgageAmount), orange: false },
+        { label: 'Mortgage EMI', value: formatAED(results.mortgageEMI), orange: false },
+        { label: 'Personal Loan', value: formatAED(results.personalLoanAmount), orange: false },
+        { label: 'Personal Loan EMI', value: formatAED(results.personalLoanEMI), orange: false },
+        { label: 'Deposit Needed', value: formatCompactAED(results.depositNeeded), orange: true },
+    ];
+
     return (
         <div id="desktop-results" className="space-y-6">
 
-            {/* Top Section: Total Monthly EMI (Full Width) */}
-            <div className="relative overflow-hidden rounded-2xl p-8 bg-linear-to-br from-primary to-blue-700 dark:from-primary dark:to-blue-900 text-white shadow-xl border border-transparent">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-white opacity-5 rounded-full -mr-20 -mt-20"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-5 rounded-full -ml-16 -mb-16"></div>
+            {/* Top Card */}
+            <div className="relative rounded-2xl bg-linear-to-br from-primary to-blue-700 dark:from-primary dark:to-blue-900 text-white shadow-xl border border-transparent overflow-hidden">
 
-                <div className="relative flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="mb-2">
+                {/* Decorative blobs */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white opacity-5 rounded-full -mr-20 -mt-20 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-5 rounded-full -ml-16 -mb-16 pointer-events-none" />
+
+                {/* ── Main info row ─────────────────────────────────── */}
+                <div className="relative flex flex-col md:flex-row justify-between items-center gap-4 px-8 pt-8 pb-4 md:pb-8">
+
+                    {/* Total Loan Amount */}
+                    <div>
                         <p className="text-xs font-semibold uppercase tracking-wider text-blue-200 mb-1">
                             Total Loan Amount
                         </p>
                         <p className="text-xl lg:text-3xl font-bold text-white">
-                            {formatCompactAED(
-                                results.mortgageAmount + results.personalLoanAmount
-                            )}
+                            {formatCompactAED(results.mortgageAmount + results.personalLoanAmount)}
                         </p>
                     </div>
+
+                    {/* Total Monthly EMI */}
                     <div>
-                        <div className="flex items-center gap-3">
-                            <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">
-                                Total Monthly EMI
-                            </p>
-                        </div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-blue-200">
+                            Total Monthly EMI
+                        </p>
                         <div className="flex items-baseline gap-2">
-                            <p className="text-xl lg:text-3xl font-bold mb-2 text-white">
+                            <p className="text-xl lg:text-3xl font-bold text-white">
                                 {formatAED(results.monthlyEMI)}
                             </p>
                             <span className="text-blue-200 text-sm font-medium">/month</span>
                         </div>
                     </div>
 
-                    {/* Stats row with slider arrows */}
-                    <div className="flex items-center gap-2 min-w-0">
-
+                    {/* ── Desktop stats strip (with arrows) — hidden on mobile ── */}
+                    <div className="hidden md:flex items-center gap-2 min-w-0">
                         {/* Left arrow */}
                         <button
                             onClick={scrollLeft}
@@ -77,43 +87,30 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                             aria-label="Scroll left"
                             className={[
                                 'flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full transition-all duration-200',
-                                'bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/10',
-                                'hover:bg-white/90 dark:hover:bg-white/20 active:scale-90',
-                                canScrollLeft
-                                    ? 'opacity-100 cursor-pointer shadow-sm'
-                                    : 'opacity-30 cursor-not-allowed',
+                                'bg-white/20 backdrop-blur-sm border border-white/30',
+                                'hover:bg-white/30 active:scale-90',
+                                canScrollLeft ? 'opacity-100 cursor-pointer shadow-sm' : 'opacity-30 cursor-not-allowed',
                             ].join(' ')}
                         >
-                            <Icon icon="mdi:chevron-left" className="w-4 h-4 text-text-primary dark:text-white" />
+                            <Icon icon="mdi:chevron-left" className="w-4 h-4 text-white" />
                         </button>
 
-                        {/* Scrollable cards */}
+                        {/* Scroll container */}
                         <div
                             ref={scrollRef}
                             onScroll={updateArrows}
                             className="overflow-x-auto min-w-0 rounded-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                         >
-                            <div className="flex items-center gap-0 bg-white/5 p-4 rounded-xl backdrop-blur-sm border border-white/20 min-w-max">
-                                <div className="px-5 border-r border-white/20 text-center">
-                                    <p className="text-xs text-blue-200 uppercase tracking-wide mb-1">Mortgage Amount</p>
-                                    <p className="font-bold text-base text-white whitespace-nowrap">{formatCompactAED(results.mortgageAmount)}</p>
-                                </div>
-                                <div className="px-5 border-r border-white/20 text-center">
-                                    <p className="text-xs text-blue-200 uppercase tracking-wide mb-1">Mortgage EMI</p>
-                                    <p className="font-bold text-base text-white whitespace-nowrap">{formatAED(results.mortgageEMI)}</p>
-                                </div>
-                                <div className="px-5 border-r border-white/20 text-center">
-                                    <p className="text-xs text-blue-200 uppercase tracking-wide mb-1">Personal Loan</p>
-                                    <p className="font-bold text-base text-white whitespace-nowrap">{formatAED(results.personalLoanAmount)}</p>
-                                </div>
-                                <div className="px-5 border-r border-white/20 text-center">
-                                    <p className="text-xs text-blue-200 uppercase tracking-wide mb-1">Personal Loan EMI</p>
-                                    <p className="font-bold text-base text-white whitespace-nowrap">{formatAED(results.personalLoanEMI)}</p>
-                                </div>
-                                <div className="px-5 text-center">
-                                    <p className="text-xs text-orange-400 uppercase tracking-wide mb-1 font-semibold">Deposit Needed</p>
-                                    <p className="font-bold text-base text-orange-400 whitespace-nowrap">{formatCompactAED(results.depositNeeded)}</p>
-                                </div>
+                            <div className="flex items-stretch bg-white/5 rounded-xl border border-white/20" style={{ minWidth: 'max-content' }}>
+                                {stats.map((s, i) => (
+                                    <div
+                                        key={s.label}
+                                        className={`px-5 py-4 text-center flex flex-col justify-center ${i < stats.length - 1 ? 'border-r border-white/20' : ''}`}
+                                    >
+                                        <p className={`text-xs uppercase tracking-wide mb-1 font-semibold ${s.orange ? 'text-orange-400' : 'text-blue-200'}`}>{s.label}</p>
+                                        <p className={`font-bold text-base whitespace-nowrap ${s.orange ? 'text-orange-400' : 'text-white'}`}>{s.value}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -124,21 +121,49 @@ export const MortgageResults: React.FC<MortgageResultsProps> = ({
                             aria-label="Scroll right"
                             className={[
                                 'flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-full transition-all duration-200',
-                                'bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/30 dark:border-white/10',
-                                'hover:bg-white/90 dark:hover:bg-white/20 active:scale-90',
-                                canScrollRight
-                                    ? 'opacity-100 cursor-pointer shadow-sm'
-                                    : 'opacity-30 cursor-not-allowed',
+                                'bg-white/20 backdrop-blur-sm border border-white/30',
+                                'hover:bg-white/30 active:scale-90',
+                                canScrollRight ? 'opacity-100 cursor-pointer shadow-sm' : 'opacity-30 cursor-not-allowed',
                             ].join(' ')}
                         >
-                            <Icon icon="mdi:chevron-right" className="w-4 h-4 text-text-primary dark:text-white" />
+                            <Icon icon="mdi:chevron-right" className="w-4 h-4 text-white" />
                         </button>
-
                     </div>
+
                 </div>
 
+                {/* ── Mobile swipe strip — full-bleed, below card padding ── */}
+                {/* Breaks out of card padding with -mx so overflow-hidden doesn't block scroll */}
+                <div className="md:hidden border-t border-white/10">
+                    <div
+                        className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                        style={{
+                            scrollSnapType: 'x mandatory',
+                            WebkitOverflowScrolling: 'touch',
+                            touchAction: 'pan-x',
+                        }}
+                    >
+                        <div className="flex" style={{ width: 'max-content' }}>
+                            {stats.map((s, i) => (
+                                <div
+                                    key={s.label}
+                                    className={`flex-shrink-0 px-6 py-4 text-center flex flex-col justify-center ${i < stats.length - 1 ? 'border-r border-white/20' : ''}`}
+                                    style={{ scrollSnapAlign: 'start', width: 'calc(100vw - 4rem)' }}
+                                >
+                                    <p className={`text-xs uppercase tracking-wide mb-1 font-semibold ${s.orange ? 'text-orange-400' : 'text-blue-200'}`}>{s.label}</p>
+                                    <p className={`font-bold text-lg whitespace-nowrap ${s.orange ? 'text-orange-400' : 'text-white'}`}>{s.value}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-
+                    {/* Swipe hint dots */}
+                    <div className="flex justify-center gap-1 pb-3 pt-1">
+                        {stats.map((s) => (
+                            <span key={s.label} className="w-1.5 h-1.5 rounded-full bg-white/30" />
+                        ))}
+                    </div>
+                </div>
 
             </div>
         </div>
