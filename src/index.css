@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Force dark mode to use .dark class only — ignore system/browser preference */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);

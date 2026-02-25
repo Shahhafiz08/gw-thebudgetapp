@@ -5,17 +5,20 @@ import { Icon } from '@iconify/react';
 import { Button } from '@/views/ui/Button'; // Updated import
 
 export function ThemeToggle() {
+    // Read only from localStorage — never from prefers-color-scheme
     const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
 
     React.useEffect(() => {
-        const isDark = localStorage.theme === 'dark';
-
-        if (isDark) {
+        // Default to 'light' if no preference has been saved yet
+        const saved = localStorage.theme === 'dark' ? 'dark' : 'light';
+        if (saved === 'dark') {
             setTheme('dark');
             document.documentElement.classList.add('dark');
         } else {
             setTheme('light');
             document.documentElement.classList.remove('dark');
+            // Persist the default so future loads are consistent
+            localStorage.theme = 'light';
         }
     }, []);
 

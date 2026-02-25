@@ -46,9 +46,11 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
                         <img
                             src="/independent-logo.webp"
                             alt="Independent Mortgage Broker"
-                            className="h-10 w-60 object-contain"
+                            className="h-6 w-60 object-contain"
                         />
-                        <div className="text-sm font-medium text-slate-900 dark:text-white -mt-2">THE BUDGET APP</div>
+                        <span className="text-xs font-semibold tracking-[0.15em] text-text-primary opacity-80 mt-1">
+                            THE BUDGET APP
+                        </span>
                     </div>
                 </div>
 
@@ -112,50 +114,52 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({
             </div>
 
             {/* Mobile Menu Overlay */}
-            {isMenuOpen && (
-                <div className="lg:hidden absolute top-20 left-0 w-full bg-background-white border-b border-border-color shadow-2xl p-4 flex flex-col gap-3 animate-in slide-in-from-top-5 duration-200">
-                    <div className="grid grid-cols-2 gap-3">
-                        {onShareImage && (
-                            <Button
-                                onClick={async () => { if (onShareImage) await onShareImage(); setIsMenuOpen(false); }}
-                                variant="primary"
-                                size="md"
-                                className="w-full justify-center shadow-lg shadow-primary/25 glow-button gap-2"
-                            >
-                                <Icon icon="solar:gallery-send-linear" className="w-5 h-5" />
-                                <span>Share Image</span>
-                            </Button>
-                        )}
-                    </div>
+            {
+                isMenuOpen && (
+                    <div className="lg:hidden absolute top-20 left-0 w-full bg-background-white border-b border-border-color shadow-2xl p-4 flex flex-col gap-3 animate-in slide-in-from-top-5 duration-200">
+                        <div className="grid grid-cols-2 gap-3">
+                            {onShareImage && (
+                                <Button
+                                    onClick={async () => { if (onShareImage) await onShareImage(); setIsMenuOpen(false); }}
+                                    variant="primary"
+                                    size="md"
+                                    className="w-full justify-center shadow-lg shadow-primary/25 glow-button gap-2"
+                                >
+                                    <Icon icon="solar:gallery-send-linear" className="w-5 h-5" />
+                                    <span>Share Image</span>
+                                </Button>
+                            )}
+                        </div>
 
-                    <div className="grid grid-cols-2 gap-3">
-                        {onExportExcel && (
-                            <Button
-                                onClick={async () => { if (onExportExcel) await onExportExcel(); setIsMenuOpen(false); }}
-                                variant="outline"
-                                size="md"
-                                disabled={isExporting}
-                                className="w-full justify-center bg-background-light border-border-color text-text-primary hover:bg-background-secondary gap-2"
-                            >
-                                <Icon icon="solar:file-text-linear" className="w-5 h-5" />
-                                <span>Export Excel</span>
-                            </Button>
-                        )}
-                        {onExportImage && (
-                            <Button
-                                onClick={async () => { if (onExportImage) await onExportImage(); setIsMenuOpen(false); }}
-                                variant="outline"
-                                size="md"
-                                disabled={isExporting}
-                                className="w-full justify-center bg-background-light border-border-color text-text-primary hover:bg-background-secondary gap-2"
-                            >
-                                <Icon icon="solar:gallery-download-linear" className="w-5 h-5" />
-                                <span>Save Image</span>
-                            </Button>
-                        )}
+                        <div className="grid grid-cols-2 gap-3">
+                            {onExportExcel && (
+                                <Button
+                                    onClick={async () => { if (onExportExcel) await onExportExcel(); setIsMenuOpen(false); }}
+                                    variant="outline"
+                                    size="md"
+                                    disabled={isExporting}
+                                    className="w-full justify-center bg-background-light border-border-color text-text-primary hover:bg-background-secondary gap-2"
+                                >
+                                    <Icon icon="solar:file-text-linear" className="w-5 h-5" />
+                                    <span>Export Excel</span>
+                                </Button>
+                            )}
+                            {onExportImage && (
+                                <Button
+                                    onClick={async () => { if (onExportImage) await onExportImage(); setIsMenuOpen(false); }}
+                                    variant="outline"
+                                    size="md"
+                                    disabled={isExporting}
+                                    className="w-full justify-center bg-background-light border-border-color text-text-primary hover:bg-background-secondary gap-2"
+                                >
+                                    <Icon icon="solar:gallery-download-linear" className="w-5 h-5" />
+                                    <span>Save Image</span>
+                                </Button>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
-        </nav>
+                )
+            }
+        </nav >
     );
 };
